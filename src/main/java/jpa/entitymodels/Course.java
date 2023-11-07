@@ -1,12 +1,17 @@
 package jpa.entitymodels;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
 @Entity
 @Table(name = "course")
-public class Course {
+public class Course implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int Id;
 	@Column(name = "name")
@@ -14,8 +19,10 @@ public class Course {
 
 	@Column(name = "instructor")
 	private String cInstructorName;
-
-
+	
+	@ManyToMany(mappedBy = "courses")
+	private List<Student> students;
+	
 	@Override
 	public String toString() {
 		return "Course [Id=" + Id + ", cName=" + cName + ", cInstructorName=" + cInstructorName + "]";

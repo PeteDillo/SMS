@@ -1,5 +1,6 @@
 package jpa.service;
 
+import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -58,13 +59,17 @@ public class StudentService implements StudentDAO {
 	@Override
 	public void registerStudentToCourse(String sEmail, int cId) {
 		Transaction transaction = null;
-		try (SessionFactory factory = new Configuration().configure().buildSessionFactory();
-				Session session = factory.openSession();) {
+		SessionFactory factory = new Configuration().configure().buildSessionFactory();
+		try (Session session = factory.openSession();) {
 			transaction = session.beginTransaction();
-			Student student = getStudentByEmail(sEmail);
+			Student student = session.get(Student.class, sEmail);
 			Course course = session.get(Course.class, cId);
 			if (student != null && course != null) {
+				if (student.getCourses() == null) {
+				    student.setCourses(new HashSet<Course>());
+				}
 				student.getCourses().add(course);
+                session.saveOrUpdate(student);
 				transaction.commit();
 			} else {
 				if (transaction != null && transaction.isActive()) {

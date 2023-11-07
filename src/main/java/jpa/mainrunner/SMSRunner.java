@@ -8,7 +8,9 @@ import jpa.service.CourseService;
 import jpa.service.StudentService;
 
 public class SMSRunner {
-	
+	/*
+	 * having issues with class registration creating new column in student table and saving courses there
+	 * */
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		StudentService sS = new StudentService();

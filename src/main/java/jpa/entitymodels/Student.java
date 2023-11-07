@@ -1,7 +1,6 @@
 package jpa.entitymodels;
 
-import java.util.Set;
-
+import java.util.HashSet;
 import javax.persistence.*;
 
 @Entity
@@ -16,26 +15,30 @@ public class Student {
 	private String password;
 
 	
-    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "student_course",
-        joinColumns = @JoinColumn(name = "email"),
-        inverseJoinColumns = @JoinColumn(name = "course_id")
+        joinColumns = {@JoinColumn(name = "email")},
+        inverseJoinColumns = {@JoinColumn(name = "course_id")}
     )
-	private Set<Course> courses;
+	private HashSet<Course> courses;
 
 	public Student() {
 
 	}
 
-	public Student(String email, String sName, String password, Set<Course> courses) {
+	public Student(String email, String sName, String password) {
 		super();
 		this.email = email;
 		this.sName = sName;
 		this.password = password;
-		this.courses = courses;
+		this.courses = new HashSet<>();
 	}
 
+
+	@Override
+	public String toString() {
+		return "Student [email=" + email + ", sName=" + sName + ", password=" + password + ", courses=" + courses + "]";
+	}
 
 	public String getEmail() {
 		return email;
@@ -61,11 +64,11 @@ public class Student {
 		this.password = sPass;
 	}
 
-	public Set<Course> getCourses() {
+	public HashSet<Course> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(Set<Course> courses) {
+	public void setCourses(HashSet<Course> courses) {
 		this.courses = courses;
 	}
 

@@ -11,14 +11,28 @@ import jpa.entitymodels.Course;
 
 public class CourseService implements CourseDAO{
 
-	@Override
-	public List<Course> getAllCourses() {
-		SessionFactory factory = new Configuration().configure().buildSessionFactory();
+    @Override
+    public List<Course> getAllCourses() {
+    	SessionFactory factory = new Configuration().configure().buildSessionFactory();
 		Session session = factory.openSession();
-        String hql = "FROM Course";
-        List<Course> courses = session.createQuery(hql, Course.class).list();
-		return courses;
-	}
+        try {
+            session.beginTransaction();
+
+            String hql = "FROM Course";
+            List<Course> courses = session.createQuery(hql, Course.class).list();
+
+            session.getTransaction().commit();
+
+            return courses;
+        } finally {
+            if (session != null && session.isOpen()) {
+                if (session.getTransaction().isActive()) {
+                    session.getTransaction().rollback();
+                }
+                session.close();
+            }
+        }
+    }
 
 
 }
