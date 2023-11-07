@@ -1,6 +1,7 @@
 package jpa.entitymodels;
 
 import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -14,30 +15,24 @@ public class Student {
 	@Column(name = "password", length = 50, nullable = false)
 	private String password;
 
-	
-    @JoinTable(
-        name = "student_course",
-        joinColumns = {@JoinColumn(name = "email")},
-        inverseJoinColumns = {@JoinColumn(name = "course_id")}
-    )
-	private HashSet<Course> courses;
+	@ManyToMany(targetEntity = Course.class, cascade = CascadeType.ALL)
+	private Set<Course> courses;
 
 	public Student() {
 
 	}
 
 	public Student(String email, String sName, String password) {
-		super();
 		this.email = email;
 		this.sName = sName;
 		this.password = password;
-		this.courses = new HashSet<>();
 	}
 
-
-	@Override
-	public String toString() {
-		return "Student [email=" + email + ", sName=" + sName + ", password=" + password + ", courses=" + courses + "]";
+	public Student(String email, String sName, String password, Set<Course> courses) {
+		this.email = email;
+		this.sName = sName;
+		this.password = password;
+		this.courses = courses;
 	}
 
 	public String getEmail() {
@@ -64,12 +59,21 @@ public class Student {
 		this.password = sPass;
 	}
 
-	public HashSet<Course> getCourses() {
+	public Set<Course> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(HashSet<Course> courses) {
+	public void setCourses(Set<Course> courses) {
 		this.courses = courses;
 	}
 
+	@Override
+	public String toString() {
+		return "Student{" +
+				"email='" + email + '\'' +
+				", sName='" + sName + '\'' +
+				", password='" + password + '\'' +
+				", courses=" + courses +
+				'}';
+	}
 }

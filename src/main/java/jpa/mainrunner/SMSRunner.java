@@ -28,9 +28,9 @@ public class SMSRunner {
 			if (sS.validateStudent(email, password) == true) {
 				List<Course> courses = cS.getAllCourses();
 				for(Course course : courses) {
-					course.toString();
+					System.out.println(" ID "+course.getId()+ " Course Name "+ course.getcName()+ " Instructor "+ course.getcInstructorName());
 				}
-				System.out.println("Which Course?");
+				System.out.println("Which Course for registration?");
 				cId = scanner.nextInt();
 				sS.registerStudentToCourse(email, cId);
 				System.out.println("you have been registered");

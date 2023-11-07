@@ -43,11 +43,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.33</version>
 		</dependency>
-		<dependency>
-			<groupId>com.perscholas.javacasestudy</groupId>
-			<artifactId>junit5</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		
 	</dependencies>
 
 	<build>

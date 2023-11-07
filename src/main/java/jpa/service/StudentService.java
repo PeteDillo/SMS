@@ -65,11 +65,13 @@ public class StudentService implements StudentDAO {
 			Student student = session.get(Student.class, sEmail);
 			Course course = session.get(Course.class, cId);
 			if (student != null && course != null) {
-				if (student.getCourses() == null) {
-				    student.setCourses(new HashSet<Course>());
-				}
+				// Add the course to the student's courses Set
 				student.getCourses().add(course);
-                session.saveOrUpdate(student);
+
+				// Persist the student and the course
+				session.saveOrUpdate(student);
+				session.saveOrUpdate(course);
+
 				transaction.commit();
 			} else {
 				if (transaction != null && transaction.isActive()) {
@@ -78,7 +80,6 @@ public class StudentService implements StudentDAO {
 			}
 		}
 	}
-
 	@Override
 	public List<Course> getStudentCourses(String sEmail) {
 		try (SessionFactory factory = new Configuration().configure().buildSessionFactory();

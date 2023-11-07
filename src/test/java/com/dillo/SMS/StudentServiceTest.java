@@ -19,7 +19,7 @@ public class StudentServiceTest {
         Session session = factory.openSession();
 
         // Create a new student object
-        Student student = new Student("pedro@mail.com", "Pedro Delgadillo", "1234");
+        Student student = new Student("aiannitti7@is.gd", "Alexandra Iannitti", "TWP4hf5j");
 
         // Save the student to the database
         session.beginTransaction();
