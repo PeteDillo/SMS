@@ -8,9 +8,6 @@ import jpa.service.CourseService;
 import jpa.service.StudentService;
 
 public class SMSRunner {
-	/*
-	 * having issues with class registration creating new column in student table and saving courses there
-	 * */
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		StudentService sS = new StudentService();
@@ -34,7 +31,10 @@ public class SMSRunner {
 				cId = scanner.nextInt();
 				sS.registerStudentToCourse(email, cId);
 				System.out.println("you have been registered");
-				sS.getStudentCourses(email);
+				List<Course> StudentCourses = sS.getStudentCourses(email);
+				for(Course course : StudentCourses) {
+					System.out.println(" ID "+ course.getId()+ " Course Name "+ course.getcName()+ " Instructor "+ course.getcInstructorName());
+				}
 				System.out.println("You have been logged out!");
 			} else {
 				System.out.println("Invalid credentials, Try Again!");
